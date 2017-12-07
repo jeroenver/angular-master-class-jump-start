@@ -4,7 +4,7 @@ import {ContactsService} from '../contacts.service';
 import {Router} from '@angular/router';
 import {checkEmailAvailability} from '../email-availability-validator.directive';
 import {validateEmail} from '../email-validator.directive';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {GENDER} from '../data/gender';
 import {COUNTRIES_DATA} from '../data/countries-data';
 
@@ -25,7 +25,7 @@ export class ContactsCreatorComponent implements OnInit {
     this.contactForm = this.fb.group({
       'name': ['', [Validators.required, Validators.minLength(3)]],
       'email': ['', validateEmail, checkEmailAvailability(this.contactsService)],
-      'phone': '',
+      'phone': this.fb.array(['']),
       'gender': '',
       'birthday': '',
       'website': '',
@@ -41,5 +41,15 @@ export class ContactsCreatorComponent implements OnInit {
   save(contact: Contact) {
     this.contactsService.addContact(contact)
       .subscribe(value => this.router.navigate(['/']));
+  }
+
+  addPhoneField() {
+    const control = <FormArray>this.contactForm.get('phone');
+    control.push(new FormControl(''));
+  }
+
+  removePhoneField(index) {
+    const control = <FormArray>this.contactForm.get('phone');
+    control.removeAt(index);
   }
 }

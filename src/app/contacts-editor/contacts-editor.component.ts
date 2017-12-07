@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Contact } from '../models/contact';
 import { ContactsService } from '../contacts.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {validateEmail} from '../email-validator.directive';
 import {checkEmailAvailability} from '../email-availability-validator.directive';
 import {COUNTRIES_DATA} from '../data/countries-data';
@@ -30,7 +30,7 @@ export class ContactsEditorComponent implements OnInit {
     this.contactForm = this.fb.group({
       'name': ['', [Validators.required, Validators.minLength(3)]],
       'email': ['', validateEmail, checkEmailAvailability(this.contactsService)],
-      'phone': '',
+      'phone': this.fb.array(['']),
       'gender': '',
       'birthday': '',
       'website': '',
@@ -57,6 +57,16 @@ export class ContactsEditorComponent implements OnInit {
   save(contact: Contact) {
    this.contactsService.updateContact(contact)
                        .subscribe(() => this.goToDetails(contact));
+  }
+
+  addPhoneField() {
+    const control = <FormArray>this.contactForm.get('phone');
+    control.push(new FormControl(''));
+  }
+
+  removePhoneField(index) {
+    const control = <FormArray>this.contactForm.get('phone');
+    control.removeAt(index);
   }
 
   private goToDetails(contact: Contact) {
