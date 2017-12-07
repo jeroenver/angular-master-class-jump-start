@@ -1,5 +1,5 @@
 <div class="trm-contacts-editor">
-  <form #contactForm="ngForm" (ngSubmit)="save(contactForm.value)">
+  <form [formGroup]="contactForm" (ngSubmit)="save(contact)">
   <mat-card>
     <mat-card-title-group class="fullBleed editing">
       <img mat-card-md-image [src]="contact?.image || ''">
@@ -9,44 +9,47 @@
     <mat-card-content>
       <div fxLayout="column">
         <mat-input-container fxFlex>
-          <input matInput placeholder="Name" name="name" [(ngModel)]="contact.name" #name="ngModel" required minlength="3">
-          <mat-hint align="end" *ngIf="!name.valid && !name.pristine">
-            <!-- Error messages go here -->
-            <ng-container *ngIf="name.errors.required">This field is required</ng-container>
-            <ng-container *ngIf="name.errors.minlength">Too short, required length of {{name.errors.minlength.requiredLength}}, current length {{name.errors.minlength.actualLength}}</ng-container>
+          <input matInput placeholder="Name" formControlName="name">
+          <mat-hint align="end" *ngIf="!contactForm.get('name').valid && !contactForm.get('name').pristine">
+            <ng-container *ngIf="contactForm.get('name').errors?.required">This field is required</ng-container>
+            <ng-container *ngIf="contactForm.get('name').errors?.minlength">
+              Too short, required length of {{contactForm.get('name').errors.minlength.requiredLength}}, current length {{contactForm.get('name').errors.minlength.actualLength}}
+            </ng-container>
           </mat-hint>
         </mat-input-container>
         <mat-input-container fxFlex>
-          <input matInput placeholder="Email" name="email" [(ngModel)]="contact.email" trmValidateEmail #email="ngModel">
-          <mat-hint align="end" *ngIf="!email.valid && !email.pristine">
-            <ng-container>Not a valid email address!</ng-container>
+          <input matInput placeholder="Email" formControlName="email">
+          <mat-hint align="end" *ngIf="!contactForm.get('email').valid && !contactForm.get('email').pristine">
+            <ng-container *ngIf="contactForm.get('email').errors?.validateEmail">Not a valid email address!</ng-container>
+            <ng-container *ngIf="contactForm.get('email').errors?.emailTaken">This email address is already taken!</ng-container>
           </mat-hint>
         </mat-input-container>
         <mat-input-container fxFlex>
-          <input matInput placeholder="Phone" name="phone" [(ngModel)]="contact.phone">
+          <input matInput placeholder="Phone" formControlName="phone">
         </mat-input-container>
         <mat-input-container fxFlex>
-          <input matInput placeholder="Website" name="website" [(ngModel)]="contact.website">
+          <input matInput placeholder="Website" formControlName="website">
         </mat-input-container>
         <mat-input-container fxFlex>
-          <input matInput placeholder="Birthday" name="birthday" [(ngModel)]="contact.birthday" type="date">
+          <input matInput placeholder="Birthday" formControlName="birthday" type="date">
         </mat-input-container>
-        <fieldset fxLayout="column">
+        <fieldset fxLayout="column" formGroupName="address">
           <legend>Address</legend>
           <mat-input-container fxFlex>
-            <input matInput placeholder="Street" name="street" [(ngModel)]="contact.address.street">
+            <input matInput placeholder="Street" formControlName="street">
           </mat-input-container>
           <mat-input-container fxFlex>
-            <input matInput placeholder="Zip" name="zip" [(ngModel)]="contact.address.zip">
+            <input matInput placeholder="Zip" formControlName="zip">
           </mat-input-container>
           <mat-input-container fxFlex>
-            <input matInput placeholder="City" name="city" [(ngModel)]="contact.address.city">
+            <input matInput placeholder="City" formControlName="city">
           </mat-input-container>
         </fieldset>
       </div>
     </mat-card-content>
     <mat-card-actions fxLayout fxLayoutAlign="center center">
-      <button mat-button type="button" (click)="save(contact)" [disabled]="!contactForm.valid" title="Save contact">Save</button>
+      <button mat-button type="submit"
+              [disabled]="!contactForm.valid" title="Save contact">Save</button>
       <button mat-button type="button" (click)="cancel(contact)" title="Cancel editing">Cancel</button>
     </mat-card-actions>
   </mat-card>
