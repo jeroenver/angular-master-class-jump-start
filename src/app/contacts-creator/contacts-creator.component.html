@@ -12,14 +12,15 @@
             <input matInput placeholder="Name" name="name" #name="ngModel" ngModel required minlength="3">
             <mat-hint align="end" *ngIf="!name.valid && !name.pristine">
               <!-- Error messages go here -->
-              <ng-container *ngIf="name.errors.required">This field is required</ng-container>
-              <ng-container *ngIf="name.errors.minlength">Too short, required length of {{name.errors.minlength.requiredLength}}, current length {{name.errors.minlength.actualLength}}</ng-container>
+              <ng-container *ngIf="name.errors?.required">This field is required</ng-container>
+              <ng-container *ngIf="name.errors?.minlength">Too short, required length of {{name.errors.minlength.requiredLength}}, current length {{name.errors.minlength.actualLength}}</ng-container>
             </mat-hint>
           </mat-input-container>
           <mat-input-container fxFlex [dividerColor]="email.valid ? primary:warn">
-            <input matInput placeholder="Email" name="email" ngModel trmValidateEmail #email="ngModel">
+            <input matInput placeholder="Email" name="email" ngModel trmValidateEmail trmCheckEmailAvailability #email="ngModel">
             <mat-hint align="end" *ngIf="!email.valid && !email.pristine">
-              <ng-container>Not a valid email address!</ng-container>
+              <ng-container *ngIf="email.errors?.validateEmail">Not a valid email address!</ng-container>
+              <ng-container *ngIf="email.errors?.emailTaken">This email address is already taken!</ng-container>
             </mat-hint>
           </mat-input-container>
           <mat-input-container fxFlex>
