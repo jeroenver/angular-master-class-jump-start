@@ -16,8 +16,11 @@
               <ng-container *ngIf="name.errors.minlength">Too short, required length of {{name.errors.minlength.requiredLength}}, current length {{name.errors.minlength.actualLength}}</ng-container>
             </mat-hint>
           </mat-input-container>
-          <mat-input-container fxFlex>
-            <input matInput placeholder="Email" name="email" ngModel>
+          <mat-input-container fxFlex [dividerColor]="email.valid ? primary:warn">
+            <input matInput placeholder="Email" name="email" ngModel trmValidateEmail #email="ngModel">
+            <mat-hint align="end" *ngIf="!email.valid && !email.pristine">
+              <ng-container>Not a valid email address!</ng-container>
+            </mat-hint>
           </mat-input-container>
           <mat-input-container fxFlex>
             <input matInput placeholder="Birthday" name="birthday" type="date" ngModel>

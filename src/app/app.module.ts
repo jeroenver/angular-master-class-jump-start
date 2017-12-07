@@ -18,6 +18,7 @@ import { ContactsService } from './contacts.service';
 import { APP_ROUTES } from './app.routes';
 import { API_ENDPOINT } from './app.tokens';
 import { ContactsCreatorComponent } from './contacts-creator/contacts-creator.component';
+import { EmailValidatorDirective } from './email-validator.directive';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ContactsCreatorComponent } from './contacts-creator/contacts-creator.co
     ContactsListComponent,
     ContactsDetailComponent,
     ContactsEditorComponent,
-    ContactsCreatorComponent
+    ContactsCreatorComponent,
+    EmailValidatorDirective
   ],
   imports: [
     BrowserModule,

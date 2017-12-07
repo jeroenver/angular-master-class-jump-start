@@ -1,4 +1,5 @@
 <div class="trm-contacts-editor">
+  <form #contactForm="ngForm" (ngSubmit)="save(contactForm.value)">
   <mat-card>
     <mat-card-title-group class="fullBleed editing">
       <img mat-card-md-image [src]="contact?.image || ''">
@@ -8,10 +9,18 @@
     <mat-card-content>
       <div fxLayout="column">
         <mat-input-container fxFlex>
-          <input matInput placeholder="Name" name="name" [(ngModel)]="contact.name">
+          <input matInput placeholder="Name" name="name" [(ngModel)]="contact.name" #name="ngModel" required minlength="3">
+          <mat-hint align="end" *ngIf="!name.valid && !name.pristine">
+            <!-- Error messages go here -->
+            <ng-container *ngIf="name.errors.required">This field is required</ng-container>
+            <ng-container *ngIf="name.errors.minlength">Too short, required length of {{name.errors.minlength.requiredLength}}, current length {{name.errors.minlength.actualLength}}</ng-container>
+          </mat-hint>
         </mat-input-container>
         <mat-input-container fxFlex>
-          <input matInput placeholder="Email" name="email" [(ngModel)]="contact.email">
+          <input matInput placeholder="Email" name="email" [(ngModel)]="contact.email" trmValidateEmail #email="ngModel">
+          <mat-hint align="end" *ngIf="!email.valid && !email.pristine">
+            <ng-container>Not a valid email address!</ng-container>
+          </mat-hint>
         </mat-input-container>
         <mat-input-container fxFlex>
           <input matInput placeholder="Phone" name="phone" [(ngModel)]="contact.phone">
@@ -37,8 +46,9 @@
       </div>
     </mat-card-content>
     <mat-card-actions fxLayout fxLayoutAlign="center center">
-      <button mat-button type="button" (click)="save(contact)" title="Save contact">Save</button>
+      <button mat-button type="button" (click)="save(contact)" [disabled]="!contactForm.valid" title="Save contact">Save</button>
       <button mat-button type="button" (click)="cancel(contact)" title="Cancel editing">Cancel</button>
     </mat-card-actions>
   </mat-card>
+  </form>
 </div>
