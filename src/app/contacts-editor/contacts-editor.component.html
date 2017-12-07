@@ -48,18 +48,7 @@
         <mat-input-container fxFlex>
           <input matInput placeholder="Birthday" formControlName="birthday" type="date">
         </mat-input-container>
-        <fieldset fxLayout="column" formGroupName="address">
-          <legend>Address</legend>
-          <mat-input-container fxFlex>
-            <input matInput placeholder="Street" formControlName="street">
-          </mat-input-container>
-          <mat-input-container fxFlex>
-            <input matInput placeholder="Zip" formControlName="zip">
-          </mat-input-container>
-          <mat-input-container fxFlex>
-            <input matInput placeholder="City" formControlName="city">
-          </mat-input-container>
-        </fieldset>
+        <trm-address-input></trm-address-input>
       </div>
     </mat-card-content>
     <mat-card-actions fxLayout fxLayoutAlign="center center">

@@ -29,13 +29,9 @@ export class ContactsCreatorComponent implements OnInit {
       'gender': '',
       'birthday': '',
       'website': '',
-      'address': this.fb.group({
-        'street': '',
-        'zip': '',
-        'city': '',
-        'country': ''
-      })
+      'address': [{}]
     });
+    this.contactForm.valueChanges.subscribe(console.log);
   }
 
   save(contact: Contact) {

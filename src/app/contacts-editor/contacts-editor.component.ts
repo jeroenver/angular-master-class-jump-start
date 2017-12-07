@@ -34,12 +34,7 @@ export class ContactsEditorComponent implements OnInit {
       'gender': '',
       'birthday': '',
       'website': '',
-      'address': this.fb.group({
-        'street': '',
-        'zip': '',
-        'city': '',
-        'country': ''
-      })
+      'address': [{}]
     });
 
     this.contactsService.getContact(this.route.snapshot.paramMap.get('id'))
