@@ -9,7 +9,12 @@
       <mat-card-content>
         <div fxLayout="column">
           <mat-input-container fxFlex>
-            <input matInput placeholder="Name" name="name" ngModel>
+            <input matInput placeholder="Name" name="name" #name="ngModel" ngModel required minlength="3">
+            <mat-hint align="end" *ngIf="!name.valid && !name.pristine">
+              <!-- Error messages go here -->
+              <ng-container *ngIf="name.errors.required">This field is required</ng-container>
+              <ng-container *ngIf="name.errors.minlength">Too short, required length of {{name.errors.minlength.requiredLength}}, current length {{name.errors.minlength.actualLength}}</ng-container>
+            </mat-hint>
           </mat-input-container>
           <mat-input-container fxFlex>
             <input matInput placeholder="Email" name="email" ngModel>
@@ -46,7 +51,7 @@
         </div>
       </mat-card-content>
       <mat-card-actions fxLayout fxLayoutAlign="center center">
-        <button mat-button type="submit">Save</button>
+        <button mat-button type="submit" [disabled]="!contactForm.valid">Save</button>
         <a mat-button title="Cancel creating new contact" routerLink="/">Cancel</a>
       </mat-card-actions>
     </mat-card>
