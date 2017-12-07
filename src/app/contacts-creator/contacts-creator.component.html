@@ -1,0 +1,54 @@
+<div class="trm-contacts-creator">
+  <form #contactForm="ngForm" (ngSubmit)="save(contactForm.value)">
+    <mat-card>
+      <mat-card-title-group>
+        <img mat-card-md-image alt="Placeholder image" src="/assets/images/placeholder.png">
+        <mat-card-title></mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+      </mat-card-title-group>
+      <mat-card-content>
+        <div fxLayout="column">
+          <mat-input-container fxFlex>
+            <input matInput placeholder="Name" name="name" ngModel>
+          </mat-input-container>
+          <mat-input-container fxFlex>
+            <input matInput placeholder="Email" name="email" ngModel>
+          </mat-input-container>
+          <mat-input-container fxFlex>
+            <input matInput placeholder="Birthday" name="birthday" type="date" ngModel>
+          </mat-input-container>
+          <mat-input-container fxFlex>
+            <input matInput placeholder="Phone" name="phone" ngModel>
+          </mat-input-container>
+          <mat-input-container fxFlex>
+            <input matInput placeholder="Website" name="website" ngModel>
+          </mat-input-container>
+          <mat-radio-group name="gender">
+            <mat-radio-button>
+              INSERT_GENDER_VARIANT
+            </mat-radio-button>
+          </mat-radio-group>
+          <fieldset fxLayout="column" ngModelGroup="address">
+            <legend>Address</legend>
+            <mat-input-container fxFlex>
+              <input matInput placeholder="Street" name="street" ngModel>
+            </mat-input-container>
+            <mat-input-container fxFlex>
+              <input matInput placeholder="Zip" name="zip" ngModel>
+            </mat-input-container>
+            <mat-input-container fxFlex>
+              <input matInput placeholder="City" name="city" ngModel>
+            </mat-input-container>
+            <mat-select placeholder="Country" name="country">
+              <mat-option>INSER_COUNTRY_NAME</mat-option>
+            </mat-select>
+          </fieldset>
+        </div>
+      </mat-card-content>
+      <mat-card-actions fxLayout fxLayoutAlign="center center">
+        <button mat-button type="submit">Save</button>
+        <a mat-button title="Cancel creating new contact" routerLink="/">Cancel</a>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>
